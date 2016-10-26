@@ -45,10 +45,38 @@ func BuildCommonMailContent(event *model.Event) string {
 	)
 }
 
+func BuildCommonSlackContent(event *model.Event) (string, string, string) {
+	return fmt.Sprintf(
+		"主机: %s %s (%s)",
+		event.Endpoint,
+		event.Note(),
+		event.StatusString(),
+	), fmt.Sprintf(
+		"%s",
+		event.Status,
+	), fmt.Sprintf(
+		"{%s %s}{%s}{指标:%s}{当前值:%d,判定条件%s%s}{告警次数%d/%d}{异常开始时间:%s}",
+		event.AlarmLevel(),
+		event.Endpoint,
+		event.Note(),
+		event.Metric(),
+		utils.ReadableFloat(event.LeftValue),
+		event.Operator(),
+		utils.ReadableFloat(event.RightValue()),
+		event.CurrentStep,
+		event.MaxStep(),
+		event.FormattedTime(),
+	)
+}
+
 func GenerateSmsContent(event *model.Event) string {
 	return BuildCommonSMSContent(event)
 }
 
 func GenerateMailContent(event *model.Event) string {
 	return BuildCommonMailContent(event)
+}
+
+func GenerateSlackContent(event *model.Event) (string, string, string) {
+	return BuildCommonSlackContent(event)
 }

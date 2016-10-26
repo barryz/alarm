@@ -42,13 +42,16 @@ func consumeHighEvents(event *model.Event, action *api.Action) {
 
 	smsContent := GenerateSmsContent(event)
 	mailContent := GenerateMailContent(event)
+	title, status, content := GenerateSlackContent(event)
 
 	if event.Priority() < 3 {
 		redis.WriteSms(phones, smsContent)
 	}
 
 	redis.WriteMail(mails, smsContent, mailContent)
+	redis.WriteSlack(title, status, content)
 }
+
 
 // 低优先级的做报警合并
 func consumeLowEvents(event *model.Event, action *api.Action) {
@@ -56,11 +59,13 @@ func consumeLowEvents(event *model.Event, action *api.Action) {
 		return
 	}
 
+	title, status, content := GenerateSlackContent(event)
 	if event.Priority() < 3 {
 		ParseUserSms(event, action)
 	}
 
 	ParseUserMail(event, action)
+	redis.WriteSlack(title, status, content)
 }
 
 func ParseUserSms(event *model.Event, action *api.Action) {

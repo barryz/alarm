@@ -45,6 +45,20 @@ func WriteMailModel(mail *model.Mail) {
 	LPUSH(g.Config().Queue.Mail, string(bs))
 }
 
+func WriteSlackModel(slack *model.Slack) {
+	if slack == nil {
+		return
+	}
+
+	bs, err := json.Marshal(slack)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	LPUSH(g.Config().Queue.Slack, string(bs))
+}
+
 func WriteSms(tos []string, content string) {
 	if len(tos) == 0 {
 		return
@@ -61,4 +75,9 @@ func WriteMail(tos []string, subject, content string) {
 
 	mail := &model.Mail{Tos: strings.Join(tos, ","), Subject: subject, Content: content}
 	WriteMailModel(mail)
+}
+
+func WriteSlack(title string, status string, content string) {
+	slack := &model.Slack{Title:title, Status:status, Content:content}
+	WriteSlackModel(slack)
 }
