@@ -55,7 +55,7 @@ func BuildCommonSlackContent(event *model.Event) (string, string, string) {
 		"%s",
 		event.Status,
 	), fmt.Sprintf(
-		"{%s %s}{%s}{指标:%s}{当前值:%d,判定条件%s%s}{告警次数%d/%d}{异常开始时间:%s}",
+		"{%s %s}{%s}{指标:%s}{当前值:%s,判定条件%s%s}{告警次数%d/%d}{异常开始时间:%s}",
 		event.AlarmLevel(),
 		event.Endpoint,
 		event.Note(),
