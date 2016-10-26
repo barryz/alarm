@@ -9,7 +9,7 @@ import (
 
 func BuildCommonSMSContent(event *model.Event) string {
 	return fmt.Sprintf(
-		"{%s} {%s} {主机:%s} {%s} {当前值:%s; 判定条件:%s%s, 判定函数:%s} {指标:%s} {第%d次告警} {时间:%s}",
+		"{%s} {%s} {主机:%s} {%s} {当前值:%s, 判定条件:%s%s} {指标:%s} {告警次数:%d/%d} {时间:%s}",
 		event.AlarmLevel(),
 		event.StatusString(),
 		event.Endpoint,
@@ -17,9 +17,9 @@ func BuildCommonSMSContent(event *model.Event) string {
 		utils.ReadableFloat(event.LeftValue),
 		event.Operator(),
 		utils.ReadableFloat(event.RightValue()),
-		event.Func(),
 		event.Metric(),
 		event.CurrentStep,
+		event.MaxStep(),
 		event.FormattedTime(),
 	)
 }
