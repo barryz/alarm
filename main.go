@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/open-falcon/alarm/cron"
-	"github.com/open-falcon/alarm/g"
-	"github.com/open-falcon/alarm/http"
+	"github.com/barryz/alarm/cron"
+	"github.com/barryz/alarm/g"
+	"github.com/barryz/alarm/http"
 	"os"
 	"os/signal"
 	"syscall"

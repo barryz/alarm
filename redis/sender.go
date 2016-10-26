@@ -2,8 +2,8 @@ package redis
 
 import (
 	"encoding/json"
-	"github.com/open-falcon/alarm/g"
-	"github.com/open-falcon/sender/model"
+	"github.com/barryz/alarm/g"
+	"github.com/barryz/sender/model"
 	"log"
 	"strings"
 )

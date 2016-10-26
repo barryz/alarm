@@ -2,8 +2,8 @@ package g
 
 import (
 	"fmt"
-	"github.com/open-falcon/common/model"
-	"github.com/open-falcon/common/utils"
+	"github.com/barryz/common/model"
+	"github.com/barryz/common/utils"
 	"sync"
 )
 

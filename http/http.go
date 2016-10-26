@@ -6,7 +6,7 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/astaxie/beego"
-	"github.com/open-falcon/alarm/g"
+	"github.com/barryz/alarm/g"
 )
 
 func configRoutes() {

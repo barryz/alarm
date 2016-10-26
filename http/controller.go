@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
-	"github.com/open-falcon/alarm/g"
+	"github.com/barryz/alarm/g"
 	"github.com/toolkits/file"
 )
 

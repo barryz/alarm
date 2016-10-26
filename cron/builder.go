@@ -2,27 +2,26 @@ package cron
 
 import (
 	"fmt"
-	"github.com/open-falcon/alarm/g"
-	"github.com/open-falcon/common/model"
-	"github.com/open-falcon/common/utils"
+	"github.com/barryz/alarm/g"
+	"github.com/barryz/common/model"
+	"github.com/barryz/common/utils"
 )
 
+
 func BuildCommonSMSContent(event *model.Event) string {
-	return fmt.Sprintf(
-		"[P%d][%s][%s][][%s %s %s %s %s%s%s][O%d %s]",
-		event.Priority(),
-		event.Status,
-		event.Endpoint,
-		event.Note(),
-		event.Func(),
-		event.Metric(),
-		utils.SortedTags(event.PushedTags),
-		utils.ReadableFloat(event.LeftValue),
-		event.Operator(),
-		utils.ReadableFloat(event.RightValue()),
-		event.CurrentStep,
-		event.FormattedTime(),
-	)
+    return fmt.Sprintf(
+        "[%s][%s][主机:%s%s, 当前值:%s, 判定值:%s, 判定函数:%s][指标:%s][第%d次告警][时间:%s]",
+        event.AlarmLevel(),
+        event.StatusString(),
+        event.Endpoint,
+        event.Note(),
+        utils.ReadableFloat(event.LeftValue),
+        utils.ReadableFloat(event.RightValue()),
+        event.Func(),
+        event.Metric(),
+        event.CurrentStep,
+        event.FormattedTime(),
+    )
 }
 
 func BuildCommonMailContent(event *model.Event) string {
