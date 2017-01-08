@@ -1,11 +1,11 @@
 package main
 
 import (
+	"alarm/cron"
+	"alarm/g"
+	"alarm/http"
 	"flag"
 	"fmt"
-	"github.com/barryz/alarm/cron"
-	"github.com/barryz/alarm/g"
-	"github.com/barryz/alarm/http"
 	"os"
 	"os/signal"
 	"syscall"

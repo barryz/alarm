@@ -1,11 +1,12 @@
 package redis
 
 import (
+	"alarm/g"
 	"encoding/json"
-	"github.com/barryz/alarm/g"
-	"github.com/barryz/sender/model"
 	"log"
 	"strings"
+
+	"sender/model"
 )
 
 func LPUSH(queue, message string) {
@@ -77,7 +78,11 @@ func WriteMail(tos []string, subject, content string) {
 	WriteMailModel(mail)
 }
 
-func WriteSlack(title string, status string, content string) {
-	slack := &model.Slack{Title:title, Status:status, Content:content}
+func WriteSlack(tos []string, content *model.SlackContent) {
+	if len(tos) == 0 {
+		return
+	}
+
+	slack := &model.Slack{Tos: strings.Join(tos, ","), Content: content}
 	WriteSlackModel(slack)
 }

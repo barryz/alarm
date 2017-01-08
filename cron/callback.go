@@ -1,13 +1,16 @@
 package cron
 
 import (
+	"alarm/api"
 	"fmt"
-	"github.com/barryz/alarm/api"
-	"github.com/barryz/alarm/redis"
-	"github.com/barryz/common/model"
-	"github.com/toolkits/net/httplib"
 	"strings"
 	"time"
+
+	"alarm/redis"
+
+	"common/model"
+
+	"github.com/toolkits/net/httplib"
 )
 
 func HandleCallback(event *model.Event, action *api.Action) {
@@ -18,7 +21,7 @@ func HandleCallback(event *model.Event, action *api.Action) {
 	mails := []string{}
 
 	if teams != "" {
-		phones, mails = api.ParseTeams(teams)
+		phones, mails, _ = api.ParseTeams(teams)
 		smsContent := GenerateSmsContent(event)
 		mailContent := GenerateMailContent(event)
 		if action.BeforeCallbackSms == 1 {

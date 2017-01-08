@@ -6,8 +6,9 @@ import (
 	"strings"
 	"time"
 
+	"alarm/g"
+
 	"github.com/astaxie/beego"
-	"github.com/barryz/alarm/g"
 	"github.com/toolkits/file"
 )
 

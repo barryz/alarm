@@ -1,15 +1,17 @@
 package cron
 
 import (
+	"alarm/api"
 	"encoding/json"
 	"fmt"
-	"github.com/garyburd/redigo/redis"
-	"github.com/barryz/alarm/api"
-	"github.com/barryz/alarm/g"
-	redi "github.com/barryz/alarm/redis"
 	"log"
 	"strings"
 	"time"
+
+	"alarm/g"
+
+	redi "github.com/barryz/alarm/redis"
+	"github.com/garyburd/redigo/redis"
 )
 
 func CombineSms() {
@@ -29,6 +31,7 @@ func CombineMail() {
 }
 
 func combineMail() {
+	// redis 队列获取需要合并的邮件告警事件
 	dtos := popAllMailDto()
 	count := len(dtos)
 	if count == 0 {

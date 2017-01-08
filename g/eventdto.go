@@ -1,9 +1,9 @@
 package g
 
 import (
+	"common/model"
+	"common/utils"
 	"fmt"
-	"github.com/barryz/common/model"
-	"github.com/barryz/common/utils"
 	"sync"
 )
 

@@ -1,12 +1,13 @@
 package cron
 
 import (
+	"alarm/g"
+	"common/model"
 	"encoding/json"
-	"github.com/garyburd/redigo/redis"
-	"github.com/barryz/alarm/g"
-	"github.com/barryz/common/model"
 	"log"
 	"time"
+
+	"github.com/garyburd/redigo/redis"
 )
 
 func ReadHighEvent() {

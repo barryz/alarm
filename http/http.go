@@ -5,8 +5,9 @@ import (
 	"log"
 	_ "net/http/pprof"
 
+	"alarm/g"
+
 	"github.com/astaxie/beego"
-	"github.com/barryz/alarm/g"
 )
 
 func configRoutes() {

@@ -2,13 +2,15 @@ package api
 
 import (
 	"fmt"
-	"github.com/barryz/alarm/g"
-	"github.com/toolkits/container/set"
-	"github.com/toolkits/net/httplib"
 	"log"
 	"strings"
 	"sync"
 	"time"
+
+	"alarm/g"
+
+	"github.com/toolkits/container/set"
+	"github.com/toolkits/net/httplib"
 )
 
 type User struct {
@@ -78,20 +80,34 @@ func GetUsers(teams string) map[string]*User {
 	return userMap
 }
 
-// return phones, emails
-func ParseTeams(teams string) ([]string, []string) {
+// return phones, emails and slack accout
+func ParseTeams(teams string) ([]string, []string, []string) {
 	if teams == "" {
-		return []string{}, []string{}
+		return []string{}, []string{}, []string{}
 	}
 
 	userMap := GetUsers(teams)
 	phoneSet := set.NewStringSet()
 	mailSet := set.NewStringSet()
+	slackSet := set.NewStringSet()
 	for _, user := range userMap {
 		phoneSet.Add(user.Phone)
 		mailSet.Add(user.Email)
+		slackSet.Add(parseEmailToSlack(user.Email))
+
 	}
-	return phoneSet.ToSlice(), mailSet.ToSlice()
+	return phoneSet.ToSlice(), mailSet.ToSlice(), slackSet.ToSlice()
+}
+
+// 暂时先从用户邮件中解析出用户的slack账号
+func parseEmailToSlack(email string) (slack string) {
+	tmp := strings.Split(email, "@")
+	if len(tmp) != 2 {
+		return
+	}
+
+	slack = tmp[0]
+	return
 }
 
 func CurlUic(team string) []*User {
