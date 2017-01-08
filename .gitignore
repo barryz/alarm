@@ -33,5 +33,5 @@ _testmain.go
 /alarm*
 /cfg.json
 /gitignore
-.vscode
+/.vscode
 
