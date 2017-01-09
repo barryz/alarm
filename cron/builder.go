@@ -3,12 +3,12 @@ package cron
 import (
 	"alarm/g"
 	"common/model"
-	"common/utils"
+	cm "common/utils"
 	"fmt"
-	"sender/model"
+	sm "sender/model"
 )
 
-func BuildCommonSMSContent(event *model.Event) string {
+func BuildCommonSMSContent(event *cm.Event) string {
 	return fmt.Sprintf(
 		"{%s} {%s} {主机:%s} {%s} {当前值:%s, 判定条件:%s%s} {指标:%s} {告警次数:%d/%d} {时间:%s}",
 		event.AlarmLevel(),
@@ -25,7 +25,7 @@ func BuildCommonSMSContent(event *model.Event) string {
 	)
 }
 
-func BuildCommonMailContent(event *model.Event) string {
+func BuildCommonMailContent(event *cm.Event) string {
 	link := g.Link(event)
 	return fmt.Sprintf(
 		"%s\r\n%s\r\n主机:%s\r\n指标:%s\r\nTags:%s\r\n判定函数:%s: 当前值:%s\r\n  判定条件: %s%s\r\n告警内容:%s\r\n最大报警次数:%d, 当前报警次数:%d\r\n时间:%s\r\n%s\r\n",
@@ -46,7 +46,7 @@ func BuildCommonMailContent(event *model.Event) string {
 	)
 }
 
-func BuildCommonSlackContent(event *model.Event) *model.SlackContent {
+func BuildCommonSlackContent(event *cm.Event) *sm.SlackContent {
 	return &model.SlackContent{EndPoint: event.Endpoint,
 		Note:         event.Note(),
 		Status:       event.StatusString(),
@@ -58,14 +58,14 @@ func BuildCommonSlackContent(event *model.Event) *model.SlackContent {
 		TriggerTime:  event.FormattedTime()}
 }
 
-func GenerateSmsContent(event *model.Event) string {
+func GenerateSmsContent(event *cm.Event) string {
 	return BuildCommonSMSContent(event)
 }
 
-func GenerateMailContent(event *model.Event) string {
+func GenerateMailContent(event *cm.Event) string {
 	return BuildCommonMailContent(event)
 }
 
-func GenerateSlackContent(event *model.Event) *model.SlackContent {
-	return "", "", BuildCommonSlackContent(event)
+func GenerateSlackContent(event *cm.Event) *sm.SlackContent {
+	return BuildCommonSlackContent(event)
 }

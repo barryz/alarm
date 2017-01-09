@@ -47,12 +47,15 @@ func consumeHighEvents(event *model.Event, action *api.Action) {
 		return
 	}
 
+	var (
+		phones, mails, slacks []string
+	)
 	// 通过action查询是否发送到channel, 否则发送到user
 	if len(action.SlackChannel) != 0 {
-		slacks := []string{action.SlackChannel}
+		slacks = []string{action.SlackChannel}
 	} else {
 		//  这里是通过portal 的api 查询到用户组对应的联系人信息
-		phones, mails, slacks := api.ParseTeams(action.Uic)
+		phones, mails, slacks = api.ParseTeams(action.Uic)
 	}
 
 	smsContent := GenerateSmsContent(event)
