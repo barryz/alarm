@@ -80,9 +80,9 @@ func consumeLowEvents(event *model.Event, action *api.Action) {
 	var slacks []string
 
 	if len(action.SlackChannel) != 0 {
-		slacks := []string{action.SlackChannel}
+		slacks = []string{action.SlackChannel}
 	} else {
-		_, _, slacks := api.ParseTeams(action.Uic)
+		_, _, slacks = api.ParseTeams(action.Uic)
 	}
 
 	slackContent := GenerateSlackContent(event)
