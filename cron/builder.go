@@ -47,7 +47,7 @@ func BuildCommonMailContent(event *cm.Event) string {
 }
 
 func BuildCommonSlackContent(event *cm.Event) *sm.SlackContent {
-	return &model.SlackContent{EndPoint: event.Endpoint,
+	return &sm.SlackContent{EndPoint: event.Endpoint,
 		Note:         event.Note(),
 		Status:       event.StatusString(),
 		Priority:     event.AlarmLevel(),

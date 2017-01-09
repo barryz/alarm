@@ -77,6 +77,8 @@ func consumeLowEvents(event *model.Event, action *api.Action) {
 		return
 	}
 
+	var slacks []string
+
 	if len(action.SlackChannel) != 0 {
 		slacks := []string{action.SlackChannel}
 	} else {
