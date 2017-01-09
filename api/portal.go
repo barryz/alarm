@@ -13,6 +13,7 @@ import (
 type Action struct {
 	Id                 int    `json:"id"`
 	Uic                string `json:"uic"`
+	SlackChannel       string `json:"slack_channel"`
 	Url                string `json:"url"`
 	Callback           int    `json:"callback"`
 	BeforeCallbackSms  int    `json:"before_callback_sms"`

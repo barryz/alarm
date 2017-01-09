@@ -47,8 +47,13 @@ func consumeHighEvents(event *model.Event, action *api.Action) {
 		return
 	}
 
-	//  这里是通过portal 的api 查询到用户组对应的联系人信息
-	phones, mails, slacks := api.ParseTeams(action.Uic)
+	// 通过action查询是否发送到channel, 否则发送到user
+	if len(action.SlackChannel) != 0 {
+		slacks := []string{action.SlackChannel}
+	} else {
+		//  这里是通过portal 的api 查询到用户组对应的联系人信息
+		phones, mails, slacks := api.ParseTeams(action.Uic)
+	}
 
 	smsContent := GenerateSmsContent(event)
 	mailContent := GenerateMailContent(event)
@@ -69,7 +74,12 @@ func consumeLowEvents(event *model.Event, action *api.Action) {
 		return
 	}
 
-	_, _, slacks := api.ParseTeams(action.Uic)
+	if len(action.SlackChannel) != 0 {
+		slacks := []string{action.SlackChannel}
+	} else {
+		_, _, slacks := api.ParseTeams(action.Uic)
+	}
+
 	slackContent := GenerateSlackContent(event)
 
 	// 低优先级且优先级 < 3的情况下, 解析用户的告警短信，并写入redis， 后续做短信合并

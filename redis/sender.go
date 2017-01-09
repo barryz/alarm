@@ -83,6 +83,6 @@ func WriteSlack(tos []string, content *model.SlackContent) {
 		return
 	}
 
-	slack := &model.Slack{Tos: strings.Join(tos, ","), Content: content}
+	slack := &model.Slack{Channel: strings.Join(tos, ","), Content: content}
 	WriteSlackModel(slack)
 }

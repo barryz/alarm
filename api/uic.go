@@ -106,7 +106,7 @@ func parseEmailToSlack(email string) (slack string) {
 		return
 	}
 
-	slack = tmp[0]
+	slack = "@" + tmp[0]
 	return
 }
 
