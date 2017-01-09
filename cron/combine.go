@@ -10,7 +10,8 @@ import (
 
 	"alarm/g"
 
-	redi "github.com/barryz/alarm/redis"
+	redi "alarm/redis"
+
 	"github.com/garyburd/redigo/redis"
 )
 
