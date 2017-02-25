@@ -10,7 +10,7 @@ import (
 
 func BuildCommonSMSContent(event *cm.Event) string {
 	return fmt.Sprintf(
-		"{%s} {%s} {主机:%s} {%s} {当前值:%s, 判定条件:%s%s} {指标:%s} {告警次数:%d/%d} {时间:%s}",
+		"{%s} {%s} {主机:%s} {%s} {当前值:%s, 判定条件:%s%s} {指标:%s} {Tags: %s } {告警次数:%d/%d} {时间:%s}",
 		event.AlarmLevel(),
 		event.StatusString(),
 		event.Endpoint,
@@ -19,6 +19,7 @@ func BuildCommonSMSContent(event *cm.Event) string {
 		event.Operator(),
 		utils.ReadableFloat(event.RightValue()),
 		event.Metric(),
+		utils.SortedTags(event.PushedTags),
 		event.CurrentStep,
 		event.MaxStep(),
 		event.FormattedTime(),
@@ -48,14 +49,15 @@ func BuildCommonMailContent(event *cm.Event) string {
 
 func BuildCommonSlackContent(event *cm.Event) *sm.SlackContent {
 	return &sm.SlackContent{EndPoint: event.Endpoint,
-		Note:         event.Note(),
-		Status:       event.StatusString(),
-		Priority:     event.AlarmLevel(),
-		Metric:       event.Metric(),
-		CurrentValue: utils.ReadableFloat(event.LeftValue),
-		Expression:   fmt.Sprintf("%s%s", event.Operator(), utils.ReadableFloat(event.RightValue())),
-		AlarmCount:   fmt.Sprintf("%d/%d", event.CurrentStep, event.MaxStep()),
-		TriggerTime:  event.FormattedTime()}
+		Note:                     event.Note(),
+		Status:                   event.StatusString(),
+		Priority:                 event.AlarmLevel(),
+		Metric:                   event.Metric(),
+		Tags:                     utils.SortedTags(event.PushedTags),
+		CurrentValue:             utils.ReadableFloat(event.LeftValue),
+		Expression:               fmt.Sprintf("%s%s", event.Operator(), utils.ReadableFloat(event.RightValue())),
+		AlarmCount:               fmt.Sprintf("%d/%d", event.CurrentStep, event.MaxStep()),
+		TriggerTime:              event.FormattedTime()}
 }
 
 func GenerateSmsContent(event *cm.Event) string {
