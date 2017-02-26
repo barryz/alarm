@@ -55,7 +55,7 @@ func BuildCommonSlackContent(event *cm.Event) *sm.SlackContent {
 		Metric:                   event.Metric(),
 		Tags:                     utils.SortedTags(event.PushedTags),
 		CurrentValue:             utils.ReadableFloat(event.LeftValue),
-		Expression:               fmt.Sprintf("%s%s", event.Operator(), utils.ReadableFloat(event.RightValue())),
+		Expression:               fmt.Sprintf("%s %s %s", event.Func(), event.Operator(), utils.ReadableFloat(event.RightValue())),
 		AlarmCount:               fmt.Sprintf("%d/%d", event.CurrentStep, event.MaxStep()),
 		TriggerTime:              event.FormattedTime()}
 }

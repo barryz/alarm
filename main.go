@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	v "alarm/version"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Println(g.VERSION)
+		fmt.Println(v.Build)
 		os.Exit(0)
 	}
 

@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"alarm/version"
 	"alarm/g"
 
 	"github.com/astaxie/beego"
@@ -17,7 +18,7 @@ type MainController struct {
 }
 
 func (this *MainController) Version() {
-	this.Ctx.WriteString(g.VERSION)
+	this.Ctx.WriteString(version.Build)
 }
 
 func (this *MainController) Health() {
