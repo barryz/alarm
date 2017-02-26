@@ -64,7 +64,7 @@ function tailf() {
 }
 
 function build() {
-    go build -o $app -ldflags "-X $module/version.Build=$(date "+%Y-%m-%d_%H:%M:%S")@$(git rev-parse --short HEAD) -w -s"
+    go build -o $app -ldflags "-X $module/version.Build=$(date "+%Y-%m-%d_%H%M%S")@$(git rev-parse --short HEAD) -w -s"
     if [ $? -ne 0 ]; then
         exit $?
     fi
